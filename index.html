@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火災隱患專家系統</title>
+   <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding-top: 120px; /* 調整頂部 padding */
+        /*background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);*/
+        color: #444;
+        line-height: 1.7;
+    }
+    header {
+        background: linear-gradient(to bottom, #ff8000, #ff0303); /* 醒目的紅色漸層 */
+        color: white;
+        padding: 50px 20px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    header p {
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+    nav {
+        background-color: rgba(0, 0, 0, 0.8); /* 半透明深色背景 */
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        padding: 15px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    nav ul {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    nav ul li {
+        display: inline;
+        margin: 0 20px;
+    }
+    nav a {
+        text-decoration: none;
+        color: #eee;
+        padding: 10px 18px;
+        border-radius: 7px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav a:hover {
+        background-color: #ffc107;
+        color: #333;
+    }
+    .introduction, .section {
+        background-color: white;
+        border-radius: 12px;
+        padding: 40px;
+        margin: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .introduction h2, .section h3 {
+        color: #ff6b6b; /* 鮮豔的紅色 */
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ff6b6b;
+        padding-bottom: 10px;
+    }
+    .start-button {
+        display: inline-block; /* 修改這裡 */
+        margin: 30px auto;
+        padding: 12px 24px;
+        background: linear-gradient(to right, #00c6ff, #007bff); /* 藍色漸層 */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease-in-out;
+        text-decoration: none; 
+    }
+    .start-button:hover {
+        transform: scale(1.05);
+    }
+
+
+    .dark-mode {
+        background-color: #000 !important; 
+        color: #ffea07 !important; 
+    }
+    .dark-mode header {
+        background: linear-gradient(to bottom, #5a5861, #222124); /* 醒目的紅色漸層 */
+        color: #ff8b07 !important;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+    }
+    .dark-mode header h1, .dark-mode header p {
+        color: #ffc107 !important;
+    }
+    .dark-mode nav {
+        background-color: rgba(0, 0, 0, 0.9) !important;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+    }
+    .dark-mode nav a {
+        color: #f0ad4e !important; 
+    }
+    .dark-mode nav a:hover {
+        background-color: #555 !important;
+        color: #fff !important;
+    }
+    .dark-mode .introduction, .dark-mode .section {
+        background-color: #3d3939 !important; 
+        box-shadow: 10 6px 12px rgba(223, 199, 199, 0.05);
+    }
+    .dark-mode .introduction h2, .dark-mode .section h3 {
+        color: #cc6600 !important; 
+        border-bottom-color: #cc6600 !important;
+    }
+    .dark-mode .start-button {
+        background: linear-gradient(to right, #ab02ff, #ee00ff) !important; /* 暗藍灰漸層按鈕 */
+        color: #ffffff !important;
+        box-shadow: 10 2px 4px rgba(255, 255, 255, 0.05);
+    }
+</style>
+</head>
+<body id="pageBody">
+    <button id="toggleDarkMode" style="position: fixed; top: 20px; right: 20px; z-index: 101; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; background-color: #f0f0f0; color: #333;">切換護眼模式</button>
+    <header>
+        <h1>火災隱患專家系統</h1>
+        <p>了解您的居家火災風險，並獲取改善建議。</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#electricity">用電安全</a></li>
+            <li><a href="#gas">瓦斯安全</a></li>
+            <li><a href="#escape">逃生知識</a></li>
+            <li><a href="#causes">常見火災原因</a></li>
+        </ul>
+    </nav>
+
+    <section class="introduction">
+        <h2>歡迎使用火災隱患專家系統</h2>
+        <p>本系統旨在幫助您評估居家環境中潛在的火災風險，並提供相應的改善建議，以提高您的安全。請仔細閱讀以下簡介，然後點擊「開始測驗」按鈕進行評估。</p>
+        <p>火災安全至關重要。透過了解潛在的危險因素並採取預防措施，我們可以有效地降低火災發生的機率，並在不幸發生火災時保護自己和家人的安全。</p>
+        <div style="text-align: center;">
+            <a href="quiz.html" class="start-button">開始測驗</a>
+        </div>
+    </section>
+
+    <section id="electricity" class="section">
+        <h3>用電安全</h3>
+        <p>這是關於用電安全的簡要說明 (Demo)。您可以在這裡加入更詳細的內容。</p>
+    </section>
+
+    <section id="gas" class="section">
+        <h3>瓦斯安全</h3>
+        <p>這是關於瓦斯安全的簡要說明 (Demo)。請在此處添加相關資訊。</p>
+    </section>
+
+    <section id="escape" class="section">
+        <h3>逃生知識</h3>
+        <p>這是關於火災逃生知識的簡要說明 (Demo)。請填寫實際內容。</p>
+    </section>
+
+    <section id="causes" class="section">
+        <h3>常見火災原因</h3>
+        <p>這是關於常見火災原因的簡要說明 (Demo)。請在此處補充詳細資訊。</p>
+    </section>
+
+    <script>
+        const toggleDarkModeButton = document.getElementById('toggleDarkMode');
+        const pageBody = document.getElementById('pageBody');
+        const darkModeClassName = 'dark-mode';
+
+        toggleDarkModeButton.addEventListener('click', () => {
+            pageBody.classList.toggle(darkModeClassName);
+            // 可以選擇將模式儲存到 localStorage
+            if (pageBody.classList.contains(darkModeClassName)) {
+                localStorage.setItem('darkMode', 'enabled');
+                toggleDarkModeButton.textContent = '切換一般模式';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                toggleDarkModeButton.textContent = '切換護眼模式';
+            }
+        });
+
+        // 頁面載入時檢查是否啟用護眼模式
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            pageBody.classList.add(darkModeClassName);
+            toggleDarkModeButton.textContent = '切換一般模式';
+        }
+    </script>
+</body>
+</html>
