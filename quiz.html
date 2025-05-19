@@ -3,171 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>火災隱患專家系統</title>
+    <title>火災隱患專家系統
+    </title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 更現代的字體 */
-            margin: 0;
-            padding-top: 80px;
-            background: #f4f6f8; /* 更柔和的背景色 */
-            color: #333; /* 更深的文字顏色 */
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-        nav {
-            background-color: #2c3e50; /* 深色背景 */
-            color: white;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            padding: 15px 20px;
-            display: flex; /* 使用 flex 佈局 */
-            align-items: center;
-        }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding-top: 70px; /* 調整以適應固定導航欄 */
+        background-color: #f4f6f8; /* 淺灰色背景 */
+        color: #333; /* 深色文字 */
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        nav > a:first-child { /* 主頁面 */
-            margin-right: 20px; /* 與回上題按鈕的間距 */
-        }
+    nav {
+        background-color: #2c3e50; /* 深藍灰色導航欄 */
+        color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        nav a {
-            text-decoration: none;
-            color: #eee;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        nav a:hover {
-            background-color: #34495e;
-            color: #fff;
-        }
-        .quiz-container, .results-container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 40px;
-            margin: 30px auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 更柔和的陰影 */
-            max-width: 600px;
-        }
-        .quiz-container h2, .results-container h2 {
-            color: #3498db; /* 藍色主色調 */
-            margin-top: 0;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        .question {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            font-weight: 600; /* 更粗的字重 */
-        }
-        .options label {
-            display: block;
-            margin-bottom: 12px;
-        }
-        .options input[type="radio"] {
-            margin-right: 8px;
-        }
-        .next-button, .prev-button, .results-container .next-button {
-            background-color: #2ecc71; /* 綠色按鈕 */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 12px 24px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-decoration: none; /* 確保結果頁面按鈕沒有底線 */
-            display: inline-block; /* 確保結果頁面按鈕是 inline-block */
-        }
-        .prev-button {
-            background-color: #7f8c8d; /* 灰色上一步按鈕 */
-            margin-right: 10px;
-        }
-        .next-button:hover, .results-container .next-button:hover {
-            background-color: #27ae60;
-        }
-        .prev-button:hover {
-            background-color: #616a6b;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .results-container h2 {
-            color: #2ecc71; /* 結果頁面標題顏色 */
-        }
-        .risk-level {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #e67e22; /* 風險等級顏色 */
-        }
-        .recommendations h3 {
-            color: #3498db;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        .recommendations ul {
-            padding-left: 20px;
-            list-style-type: disc; /* 確保顯示項目符號 */
-        }
-        .recommendations li {
-            margin-bottom: 15px; /* 增加垂直間距 */
-            line-height: 1.7; /* 增加行高 */
-        }
-        .recommendation-text {
-            color: #007bff; /* 您選擇的顏色 */
-            font-weight: normal;
-            display: inline; /* 讓建議文字與問題在同一行 */
-            margin-left: 10px; /* 增加問題和建議之間的間距 */
-        }
-        .recommendations li > span:first-child { /* 問題文字 */
-            font-weight: bold;
-            color: #333;
-        }
+    nav > a:first-child {
+        margin-right: 20px;
+    }
 
-        /* 黑色護眼模式樣式 */
-        .dark-mode {
-            background-color: #000 !important;
-            color: #ffe207 !important;
-        }
-        .dark-mode nav {
-            background-color: #333 !important;
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
-        }
-        .dark-mode nav a {
-            color: #f0ad4e !important;
-        }
-        .dark-mode nav a:hover {
-            background-color: #555 !important;
-            color: #fff !important;
-        }
-        .dark-mode .quiz-container, .dark-mode .results-container {
-            background-color: #3d3939 !important;
-            box-shadow: 10 6px 12px rgba(223, 199, 199, 0.05);
-        }
-        .dark-mode .quiz-container h2, .dark-mode .results-container h2, .dark-mode .recommendations h3 {
-            color: #ff8c00ef !important;
-            border-bottom-color: #ffc005 !important;
-        }
-        .dark-mode .question, .dark-mode .options label{
-            color: #f1e101 !important;
-        }
-        .dark-mode .recommendation-text{
-            color: #f43636 !important;
-        }
-        .dark-mode .dark-mode .risk-level{
-            color: #fb5400e5 !important;
-        }
-        .dark-mode .next-button, .dark-mode .prev-button, .dark-mode .results-container .next-button {
-            background-color: #006d3a !important; /* 更深的按鈕背景 */
-            color: #eee !important;
-            box-shadow: 10 2px 4px rgba(255, 255, 255, 0.05);
-        }
-    </style>
+    nav a {
+        text-decoration: none;
+        color: #ecf0f1;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover {
+        background-color: #34495e;
+        color: #fff;
+    }
+
+    #toggleDarkMode {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        z-index: 101;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #4a6572; /* 深灰色按鈕 */
+        color: #f5f6fa;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #toggleDarkMode:hover {
+        background-color: #34495e;
+    }
+
+    .quiz-container, .results-container {
+        background-color: #fff; /* 白色容器 */
+        border-radius: 10px;
+        padding: 40px;
+        margin: 30px auto;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+    }
+
+    .quiz-container h2, .results-container h2 {
+        color: #3498db; /* 藍色標題 */
+        margin-top: 0;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 15px;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    .question {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .options label {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        padding: 12px; /* 增加內邊距 */
+        border: 1px solid #ddd; /* 淺灰色邊框 */
+        border-radius: 8px; /* 更圓潤的邊角 */
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .options label:hover {
+        background-color: #f0f0f0;
+        border-color: #ccc;
+    }
+
+    .options input[type="radio"] {
+        margin-right: 10px;
+        vertical-align: middle;
+        transform: scale(1.1); /* 稍微放大單選框 */
+    }
+
+    .next-button, .prev-button, .results-container .next-button {
+        background-color: #2ecc71; /* 亮綠色按鈕 */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 30px;
+        cursor: pointer;
+        font-size: 1.1em;
+        margin-top: 25px;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .prev-button {
+        background-color: #7f8c8d; /* 灰色上一步按鈕 */
+        margin-right: 15px;
+    }
+
+    .next-button:hover, .results-container .next-button:hover {
+        background-color: #27ae60;
+    }
+
+    .prev-button:hover {
+        background-color: #616a6b;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .results-container h2 {
+        color: #2ecc71;
+    }
+
+    .risk-level {
+        font-size: 1.6em;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #e67e22; /* 橘色風險等級 */
+        text-align: center;
+    }
+
+    .recommendations h3 {
+        color: #3498db;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+
+    .recommendations ul {
+        padding-left: 25px;
+        list-style-type: disc;
+    }
+
+    .recommendations li {
+        margin-bottom: 18px;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .recommendation-text {
+        color: #007bff; /* 藍色建議文字 */
+        font-weight: normal;
+        display: block;
+        margin-top: 8px;
+        font-style: italic;
+        font-size: 1.1em;
+    }
+
+    .recommendations li > span:first-child {
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* 黑色護眼模式樣式 */
+    .dark-mode {
+        background-color: #222 !important;
+        color: #eee !important;
+    }
+
+    .dark-mode nav {
+        background-color: #333 !important;
+        box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode nav a {
+        color: #f0ad4e !important;
+    }
+
+    .dark-mode nav a:hover {
+        background-color: #555 !important;
+        color: #fff !important;
+    }
+
+    .dark-mode #toggleDarkMode {
+        background-color: #555 !important;
+        color: #eee !important;
+    }
+
+    .dark-mode .quiz-container, .dark-mode .results-container {
+        background-color: #444 !important;
+        box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .quiz-container h2, .dark-mode .results-container h2, .dark-mode .recommendations h3 {
+        color: #ffc107 !important; /* 黃色強調 */
+        border-bottom-color: #ffc107 !important;
+    }
+
+    .dark-mode .question, .dark-mode .options label {
+        color: #ddd !important;
+        font-size: 1.2em !important;
+        border-color: #555 !important;
+    }
+
+    .dark-mode .options label:hover {
+        background-color: #666 !important;
+        border-color: #777 !important;
+    }
+
+    .dark-mode .recommendation-text {
+        color: #ffc107 !important;
+        font-size: 1.1em !important;
+    }
+
+    .dark-mode .risk-level {
+        color: #f8bbd0 !important; /* 粉色風險等級 */
+    }
+
+    .dark-mode .next-button, .dark-mode .prev-button, .dark-mode .results-container .next-button {
+        background-color: #5cb85c !important; /* 綠色按鈕 */
+        color: #fff !important;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .prev-button {
+        background-color: #6c757d !important;
+    }
+
+    .dark-mode .next-button:hover, .dark-mode .results-container .next-button:hover {
+        background-color: #4cae4c !important;
+    }
+
+    .dark-mode .prev-button:hover {
+        background-color: #5a6268 !important;
+    }
+
+</style>
 </head>
 <body>
     <button id="toggleDarkMode" style="position: fixed; top: 20px; right: 20px; z-index: 101; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; background-color: #f0f0f0; color: #333;">切換護眼模式</button>
@@ -203,44 +301,255 @@
 
         let currentQuestionIndex = 0;
         let userAnswers = [];
-        const questions = [
-            {
-                question: "您家中是否經常同時使用多個高功率電器？",
-                options: ["從不", "偶爾", "經常"],
-                weights: [0, 1, 3],
-                recommendation: "避免同時使用多個高功率電器，以防電線過載。"
-            },
-            {
-                question: "您是否定期檢查家中電線是否有老化或破損？",
-                options: ["是，經常", "偶爾", "否"],
-                weights: [0, 1, 2],
-                recommendation: "定期檢查電線，如有老化或破損應立即更換。"
-            },
-            {
-                question: "您家中的瓦斯管線是否定期檢查？",
-                options: ["是", "否"],
-                weights: [0, 2],
-                recommendation: "定期請專業人員檢查瓦斯管線，確保安全。"
-            },
-            {
-                question: "您是否清楚家中逃生路線和滅火器的位置？",
-                options: ["非常清楚", "大概知道", "不清楚"],
-                weights: [0, 1, 3],
-                recommendation: "熟悉家中逃生路線，並確認滅火器可隨時使用。"
-            },
-            {
-                question: "您是否會在睡前或外出時檢查電器和瓦斯是否關閉？",
-                options: ["總是", "偶爾", "從不"],
-                weights: [0, 1, 3],
-                recommendation: "養成睡前或外出時檢查電器和瓦斯是否關閉的習慣。"
-            },
-            {
-                question: "您家中是否有安裝住宅用火災警報器？",
-                options: ["有", "沒有"],
-                weights: [0, 3],
-                recommendation: "建議安裝住宅用火災警報器，以便及早發現火情。"
-            }
-        ];
+   const questions = [
+        {
+            question: "烹飪時是否會離開廚房",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 2, 4],
+            recommendation: "專注於烹飪上，以免發生意外。"
+        },
+        {
+            question: "烹飪完畢時是否有確認瓦斯有完全關閉",
+            options: ["從不", "偶爾", "經常"],
+            weights: [4, 2, 0],
+            recommendation: "養成確認的好習慣，減少危險因子。"
+        },
+        {
+            question: "是否有發生過瓦斯外洩的情形",
+            options: ["從不", "一兩次", "三次以上"],
+            weights: [0, 2, 4],
+            recommendation: "請專家來檢查並維護。"
+        },
+        {
+            question: "家中是否有人抽菸並且會亂扔菸蒂",
+            options: ["無", "一位", "兩位或以上"],
+            weights: [0, 2, 4],
+            recommendation: "菸蒂請在菸灰缸熄滅，以免發生意外。"
+        },
+        {
+            question: "家中是否會使用蠟燭",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 1, 2],
+            recommendation: "注意蠟燭的擺放位置，盡量遠離易燃物，如：窗簾。"
+        },
+        {
+            question: "家中是否有人照護小孩",
+            options: ["無", "有"],
+            weights: [4, 0],
+            recommendation: "要有人照顧家中小孩，並且將危險物品放在小孩拿不到的位置。"
+        },
+        {
+            question: "家裡是否有祭祀習慣",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 2, 4],
+            recommendation: "注意香爐的位置，其附近不要放易燃物，避免香灰點燃。"
+        },
+        {
+            question: "是否會在戶外用火(烤肉、燒金紙等)",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 2, 4],
+            recommendation: "要準備滅火用具，方能隨時應對緊急狀況。"
+        },
+        {
+            question: "您家中是否連接多個高功率電器？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 6],
+            recommendation: "避免同時使用多個高功率電器，以防電線過載。"
+        },
+        {
+            question: "您家中是否使用多個插線板串接？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 5],
+            recommendation: "避免同時使用多個插線板串接，以防電線過載。"
+        },
+        {
+            question: "您家插座是否發熱或有焦味？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 4, 8],
+            recommendation: "發熱和焦味代表已有電線過載情況，請立即停止電器或拔掉插頭。"
+        },
+        {
+            question: "您家中的插座是否鬆動或破損？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 6],
+            recommendation: "避免使用鬆動或破損插座，以防出現短路走火。"
+        },
+        {
+            question: "您家的電線使用是否超過 10 年？",
+            options: ["否", "部分是", "是"],
+            weights: [0, 3, 6],
+            recommendation: "更換電線，或檢查線路，以防出現走火。"
+        },
+        {
+            question: "您家的電線是否有龜裂、硬化、變色？",
+            options: ["否", "部分是", "是"],
+            weights: [0, 4, 8],
+            recommendation: "立即更換電線，以防出現走火。"
+        },
+        {
+            question: "您家的電線是否有漏電現象？",
+            options: ["否", "是"],
+            weights: [0, 10],
+            recommendation: "立即更換電線，以防出現走火。"
+        },
+        {
+            question: "您家的電線是否使用老式鋁線？",
+            options: ["否", "部分是", "是"],
+            weights: [0, 4, 6],
+            recommendation: "立即更換電線。"
+        },
+        {
+            question: "您家是否有非專業私拉電線？",
+            options: ["否", "是"],
+            weights: [0, 7],
+            recommendation: "立刻停止私拉電線迴路，並請專業電工檢查。"
+        },
+        {
+            question: "您家接線是否無絕緣或接線盒？",
+            options: ["否", "是"],
+            weights: [0, 7],
+            recommendation: "立刻請專業電工檢查，並做後續處理。"
+        },
+        {
+            question: "您家是否穿越門縫或地板？",
+            options: ["否", "是"],
+            weights: [0, 5],
+            recommendation: "立刻觀察電線狀態，如有破損建議請專業電工檢查，並做後續處理。"
+        },
+        {
+            question: "您家是否擅自改裝電器/插座？",
+            options: ["否", "是"],
+            weights: [0, 6],
+            recommendation: "立刻請專業電工檢查，並做後續處理。"
+        },
+        {
+            question: "您的手機是否整夜充電並放枕邊？",
+            options: ["否", "是"],
+            weights: [0, 6],
+            recommendation: "盡量不要充過夜，實在不行更改位置。"
+        },
+        {
+            question: "您的手機是否使用非原廠充電器？",
+            options: ["否", "是"],
+            weights: [0, 5],
+            recommendation: "檢查商標、規格、商家信譽，避免受不規範充電器影響。"
+        },
+        {
+            question: "您的手機充電時是否過熱或覆蓋？",
+            options: ["否", "部分是", "是"],
+            weights: [0, 3, 5],
+            recommendation: "立即更換手機，或將手機送去維修。"
+        },
+        {
+            question: "您的手機是否長時間貼身與人體接觸？",
+            options: ["否", "偶爾", "總是"],
+            weights: [0, 2, 4],
+            recommendation: "如果有上述情況，使用時請小心。"
+        },
+        {
+            question: "是否有足夠且暢通的緊急出口，緊急出口是否達法規數量且無阻塞？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 1, 3],
+            recommendation: "改善緊急出口"
+        },
+        {
+            question: "是否有安裝消防警報系統，建築內部是否有裝設煙霧/熱感應警報器？？ ",
+            options: ["從不", "偶爾", "有明顯堆放 "],
+            weights: [0, 2, 5],
+            recommendation: "安裝火警警報器與改善通風系統 "
+        },
+        {
+            question: " 是否有灑水系統，是否有自動灑水系統（Sprinkler）？",
+            options: ["從不", "少量堆放 ", "堆滿整間 "],
+            weights: [0, 2, 5],
+            recommendation: "安裝自動灑水系統 "
+        },
+        {
+            question: "電線是否老化或亂接，是否存在明顯的老化電線或私拉亂接？ ",
+            options: ["無噴霧罐或分開存放 ", "偶爾混放 ", "經常混放 "],
+            weights: [0, 2, 5],
+            recommendation: "檢修電線 "
+        },
+        {
+            question: "消防器材是否齊全\t是否配備滅火器、消防栓等設施？\t ",
+            options: ["不會 ", "有時 ", "經常 "],
+            weights: [0, 3, 5],
+            recommendation: "補足消防器材 "
+        },
+        {
+            question: " 建材是否易燃，是否使用大量易燃建材（如木材、泡棉）？",
+            options: ["沒有 ", "偶爾 ", "有明顯放置 "],
+            weights: [0, 3, 5],
+            recommendation: "替換易燃建材 "
+        },
+        {
+            question: "通風設計是否良好\t是否有足夠排煙設施、防止濃煙擴散？ ",
+            options: ["從不 ", "偶爾 ", "有時會 "],
+            weights: [0, 2, 4],
+            recommendation: "改善通風系統 "
+        },
+        {
+        question: "您是否清楚家中的逃生路線？",
+        options: ["非常清楚", "略懂一二", "完全不清楚"],
+        weights: [0, 2, 4],
+        recommendation: "請在家中規劃並熟悉逃生路線，提高應變能力。"
+    },
+    {
+        question: "家人是否知道如何使用滅火器？",
+        options: ["都知道", "部分人知道", "沒人知道"],
+        weights: [0, 2, 4],
+        recommendation: "請教導家人正確使用滅火器，避免初期火勢擴大。"
+    },
+    {
+        question: "是否曾在廚房內存放大量雜物（如紙袋、塑膠袋）？",
+        options: ["從不", "偶爾", "經常"],
+        weights: [0, 2, 4],
+        recommendation: "清除廚房雜物，避免影響逃生或助燃。"
+    },
+    {
+        question: "是否曾讓孩童接觸火柴、打火機等火源物品？",
+        options: ["從不", "偶爾", "經常"],
+        weights: [0, 3, 5],
+        recommendation: "避免讓孩童接觸火源，應妥善收納危險物品。"
+    },
+    {
+        question: "是否會在陽台焚燒金紙或雜物？",
+        options: ["從不", "偶爾", "經常"],
+        weights: [0, 3, 5],
+        recommendation: "焚燒行為應在安全處進行，遠離住家結構。"
+    },
+    {
+        question: "是否有年長者或失智症患者無人照看？",
+        options: ["無", "偶爾", "經常"],
+        weights: [0, 3, 5],
+        recommendation: "請安排照顧人力，避免年長者誤操作爐火或設備。"
+    },
+    {
+        question: "是否有家人吸菸後未確認菸蒂完全熄滅即丟棄？",
+        options: ["從不", "偶爾", "經常"],
+        weights: [0, 2, 4],
+        recommendation: "務必將菸蒂完全熄滅再丟棄，並使用金屬煙灰缸。"
+    },
+    {
+        question: "您是否曾關閉過煙霧警報器因為覺得「太吵」？",
+        options: ["從不", "一兩次", "多次"],
+        weights: [0, 3, 5],
+        recommendation: "煙霧警報器是保命設備，請勿隨意關閉。"
+    },
+    {
+        question: "是否曾發現火災隱患後仍未處理（如聞到異味、煙霧）？",
+        options: ["從不", "偶爾", "經常"],
+        weights: [0, 3, 5],
+        recommendation: "遇到異常狀況應即時處理，勿抱持僥倖心態。"
+    },
+    {
+        question: "是否曾因害怕被罰而隱瞞火災或未報案？",
+        options: ["從不", "偶爾", "有過"],
+        weights: [0, 4, 6],
+        recommendation: "應以安全為優先，立即通報火警避免災情擴大。"
+    }
+
+];
 
         function showQuestion() {
             const currentQuestion = questions[currentQuestionIndex];
@@ -286,7 +595,7 @@
                     totalWeight += questions[i].weights[userAnswers[i]];
                     // 如果選擇了風險較高的選項（這裡我們簡單判斷權重是否大於 0），則加入該問題的建議
                     if (questions[i].weights[userAnswers[i]] > 0) {
-                        specificRecommendations.push(`<li><span>${questions[i].question}</span> <span class="recommendation-text">- ${questions[i].recommendation}</span></li>`);
+                        specificRecommendations.push(`<li><span>${questions[i].question}</span><br><span class="recommendation-text">- ${questions[i].recommendation}</span></li>`);
                     }
                 }
             }
@@ -308,8 +617,7 @@
             resultsContainer.classList.remove('hidden');
             const results = calculateRisk();
             riskLevelDisplay.textContent = `您的火災風險等級為：${results.level} (總分：${results.score})`;
-
-            let recommendationsHTML = "<h3>改善建議：</h3><ul>" + results.recommendations.join('') + "</ul>";
+            let recommendationsHTML = "<h3>改善建議：</h3><ul>" + results.recommendations.join('<br>') + "</ul>";
             if (results.recommendations.length === 0) {
                 recommendationsHTML = "<p>您的風險評估結果良好，請繼續保持！</p>";
             }
