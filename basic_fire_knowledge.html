@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本火災知識</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding-top: 100px; /* 調整頂部 padding */
+            color: #444;
+            line-height: 1.7;
+            background-color: #f8f8f8; /* 淡灰色背景 */
+        }
+        header {
+            background: linear-gradient(to bottom, #ff8000, #ff0303); /* 醒目的紅色漸層 */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0.8); /* 半透明深色背景 */
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 10px 0; /* 減少垂直 padding */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        nav ul li {
+            display: inline-block; /* 改為 inline-block 以水平排列 */
+            margin: 0 15px; /* 調整水平 margin */
+        }
+        nav a, .dropbtn {
+            display: block; /* 讓連結佔滿整個 list item 的寬度，方便點擊 */
+            text-decoration: none;
+            color: #eee;
+            padding: 8px 15px; /* 調整 padding */
+            border-radius: 7px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover, .dropdown:hover .dropbtn {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        /* 下拉選單樣式 */
+        .dropdown {
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            text-align: left;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            display: inline-block;
+            color: #eee;
+            padding: 8px 15px;
+            border-radius: 7px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #333;
+        }
+
+        .content-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px; /* 減少 padding */
+            margin: 20px; /* 調整 margin */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        h2 {
+            color: #ff6b6b; /* 鮮豔的紅色 */
+            margin-top: 0;
+            margin-bottom: 15px; /* 調整 margin */
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #ff8a8a;
+            margin-top: 15px; /* 調整 margin */
+            margin-bottom: 10px; /* 調整 margin */
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ff8a8a;
+        }
+        h4 {
+            color: #f0ad4e;
+            margin-top: 10px; /* 調整 margin */
+            margin-bottom: 8px;
+        }
+        p {
+            margin-bottom: 12px; /* 調整 margin */
+            line-height: 1.6; /* 調整行高 */
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 12px; /* 調整 margin */
+            line-height: 1.6; /* 調整行高 */
+        }
+        li {
+            margin-bottom: 6px;
+        }
+        .back-button {
+        position: fixed; /* 固定定位 */
+        top: 30px;      /* 距離頂部 20px */
+        left: 40px;     /* 距離左側 20px */
+        color: #eee;     /* 文字顏色改為淺色，與導航欄文字顏色一致 */
+        text-decoration: none; /* 移除底線 */
+        padding: 0;        /* 移除內邊距 */
+        background-color: transparent; /* 背景透明 */
+        border: none;      /* 移除邊框 */
+        font-size: 1em;    /* 可以調整字體大小 */
+        z-index: 101;    /* 確保在切換護眼模式按鈕下方，或根據您的需求調整 */
+        }
+
+        .back-button:hover {
+        color: #ffc107; /* 滑鼠懸停時改變顏色 */
+        background-color: transparent; /* 保持背景透明 */
+        }
+
+        dark-mode .back-button {
+        color: #f0ad4e !important; /* 深色模式文字顏色 */
+                
+        }
+
+        .dark-mode .back-button:hover {
+        color: #fff !important; /* 深色模式滑鼠懸停文字顏色 */
+        }
+
+        .dark-mode {
+            background-color: #000 !important;
+            color: #ffea07 !important;
+        }
+        .dark-mode header {
+            background: linear-gradient(to bottom, #474259, #170242); /* 醒目的紅色漸層 */
+            color: #ff8b07 !important;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+        }
+        .dark-mode header h1 {
+            color: #ffc107 !important;
+        }
+        .dark-mode nav {
+            background-color: rgba(0, 0, 0, 0.9) !important;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+        }
+        .dark-mode nav a, .dark-mode .dropbtn {
+            color: #f0ad4e !important;
+        }
+        .dark-mode nav a:hover, .dark-mode .dropdown:hover .dropbtn {
+            background-color: #555 !important;
+            color: #fff !important;
+        }
+        .dark-mode .content-section {
+            background-color: #3d3939 !important;
+            color: #ffc107 !important;
+            box-shadow: 10 6px 12px rgba(223, 199, 199, 0.05);
+            border-color: #555;
+        }
+        .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+            color: #cc6600 !important;
+            border-bottom-color: #cc6600 !important;
+        }
+        .dark-mode h3 {
+            border-bottom-color: #cc6600;
+        }
+        .dark-mode .collapsible {
+            background-color: #3d3939 !important; /* 與 content-section 背景色一致 */
+            color: #ffc107 !important; /* 確保文字顏色可見 */
+            margin-left: 20px;
+            margin-right: 20px;
+            width: calc(100% - 40px);
+            box-sizing: border-box;
+        }
+
+    .dark-mode .collapsible:hover {
+        background-color: #555 !important; /* hover 時稍微深一點 */
+    }
+            /* 手機版樣式 */
+            @media (max-width: 600px) {
+                nav ul li {
+                    display: block;
+                    margin: 10px 0;
+                }
+                .dropdown {
+                    display: block;
+                }
+                .dropdown-content {
+                    position: static;
+                    display: none; /* 預設在手機上不展開 */
+                    box-shadow: none;
+                    min-width: auto;
+                    background-color: transparent;
+                }
+                .dropdown:hover .dropdown-content {
+                    display: block;
+                }
+                .dropdown-content a {
+                    background-color: #333;
+                    color: #eee;
+                    border-radius: 5px;
+                    margin: 5px 0;
+                }
+                .dropbtn {
+                    display: block;
+                }
+            }
+
+        .collapsible {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 1em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease;
+        margin-left: 20px; /* 與 content-section 的左 margin 對齊 */
+        margin-right: 20px; /* 與 content-section 的右 margin 對齊 */
+        width: calc(100% - 40px); /* 扣除左右 margin 的寬度 */
+        box-sizing: border-box; /* 確保 padding 不會增加元素的總寬度 */
+    }
+
+    .collapsible:hover {
+        background-color: #ddd;
+    }
+
+        .collapsible::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #777;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible.active::after {
+            transform: rotate(180deg); /* Rotate arrow to point down when active */
+        }
+            .collapsible-content p, .collapsible-content ul, .collapsible-content ol, .collapsible-content h4 {
+                margin-top: 15px;
+            }
+
+
+    </style>
+</head>
+<body id="pageBody">
+    <button id="toggleDarkMode" style="position: fixed; top: 20px; right: 20px; z-index: 101; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; background-color: #f0f0f0; color: #333;">切換護眼模式</button>
+    <header>
+        <h1>基本火災知識</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">火災類型</a>
+                <div class="dropdown-content">
+                    <a href="#electrical-fires">電器火災</a>
+                    <a href="#grease-fires">油脂火災</a>
+                    <a href="#chemical-fires">化學火災</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">火災特性</a>
+                <div class="dropdown-content">
+                    <a href="#high-heat">高熱</a>
+                    <a href="#dense-smoke">濃煙</a>
+                    <a href="#rapid-spread">迅速蔓延</a>
+                    <a href="#toxic-gases-characteristics">毒性氣體</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">火災對人體的影響</a>
+                <div class="dropdown-content">
+                    <a href="#choking">嗆傷</a>
+                    <a href="#heat-injury">熱傷害</a>
+                    <a href="#panic-escape-difficulty">驚慌逃生困難</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content-section">
+        <a href="index.html" class="back-button">主頁面</a>
+
+        <h2 id="fire-types">火災類型</h2>
+        <h3 id="electrical-fires" class="collapsible">電器火災</h3>
+    <div class="collapsible-content">
+        <p>電器火災是指因電氣設備或線路故障引起的火災。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>電線短路</li>
+            <li>過載使用</li>
+            <li>老舊設備起火</li>
+            <li>插頭鬆動</li>
+        </ul>
+        <h4>特徵：</h4>
+        <ul>
+            <li>可能伴隨爆裂聲</li>
+            <li>冒出煙及火花</li>
+            <li>有燒焦味</li>
+            <li>夜間常見</li>
+        </ul>
+        <h4>處理方法：</h4>
+        <ol>
+            <li>立即切斷電源（拔插頭或關總開關）。</li>
+            <li>使用「二氧化碳滅火器」或「乾粉滅火器」撲滅。</li>
+            <li>嚴禁用水，避免導電觸電。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>定期檢查電線與電器。</li>
+            <li>避免過載使用延長線。</li>
+            <li>選用有安全標章的電器。</li>
+            <li>老舊設備及時更換。</li>
+            <li>離開時關閉非必要電源。</li>
+        </ul>
+    </div>
+        <h3 id="grease-fires" class="collapsible">油脂火災</h3>
+<div class="collapsible-content">
+    <p>油脂火災通常發生在廚房，由於烹飪油或油脂過熱引起。</p>
+    <h4>常見原因：</h4>
+    <ul>
+        <li>食用油過熱（廚房）</li>
+        <li>工業油脂蓄積</li>
+        <li>高溫炸物時無人看管</li>
+    </ul>
+    <h4>特徵：</h4>
+    <ul>
+        <li>高溫</li>
+        <li>火勢易噴濺</li>
+        <li>復燃風險高</li>
+        <li>濃煙</li>
+        <li>火勢擴散快</li>
+    </ul>
+    <h4>處理方法：</h4>
+    <ol>
+        <li>關閉熱源（如瓦斯爐）。</li>
+        <li>用「濕毯」或鍋蓋覆蓋以窒息火勢。</li>
+        <li>使用「專用滅火器」（如類K滅火器）。</li>
+        <li>嚴禁用水。</li>
+    </ol>
+    <h4>預防措施：</h4>
+    <ul>
+        <li>烹飪時避免油溫過高，人不可離火。</li>
+        <li>定期清理廚房排油煙機與管線。</li>
+        <li>工業設備需定期清除油脂殘渣。</li>
+    </ul>
+</div>
+
+        <h3 id="chemical-fires" class="collapsible">化學火災</h3>
+        <div class="collapsible-content">
+        <p>化學火災涉及易燃或具反應性的化學物質。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>易燃液體（汽油、酒精）</li>
+            <li>氣體（瓦斯）</li>
+            <li>化學物質反應</li>
+        </ul>
+        <h4>特徵：</h4>
+        <ul>
+            <li>燃燒迅速</li>
+            <li>可能有毒煙霧或爆炸</li>
+        </ul>
+        <h4>處理方法：</h4>
+        <ol>
+            <li>優先移除火源或隔絕空氣（如蓋上防火毯）。</li>
+            <li>使用「泡沫滅火器」。</li>
+            <li>嚴禁用水（尤其油類或金屬火災）。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>化學物品存放於陰涼通風處，遠離火源。</li>
+            <li>標示清楚並分開存放不相容物質（如酸與鹼）。</li>
+            <li>操作時穿戴防護裝備。</li>
+        </ul>
+        </div>
+
+        <h2 id="fire-characteristics">火災特性</h2>
+        <h3 id="high-heat" class="collapsible">高熱</h3>
+        <div class="collapsible-content">
+        <p>火災產生極高的熱量，可能導致燒傷、脫水，並加速其他物質燃燒。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>燃燒物質釋放能量</li>
+            <li>密閉空間蓄熱</li>
+        </ul>
+        <h4>影響：</h4>
+        <ul>
+            <li>灼傷</li>
+            <li>熱衰竭</li>
+            <li>結構坍塌</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>保持低姿勢逃生（地面溫度較低、空氣較清新）。</li>
+            <li>用濕毛巾遮擋皮膚，避免直接暴露於熱輻射。</li>
+            <li>若被困，關門阻隔火勢，用衣物塞住門縫減少熱氣流入。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>建築使用防火材料（如防火門、隔熱塗料）。</li>
+            <li>避免堆積易燃物（如紙箱）靠近熱源。</li>
+        </ul>
+        </div>
+
+        <h3 id="dense-smoke" class="collapsible">濃煙</h3>
+        <div class="collapsible-content">
+        <p>濃煙會降低能見度，阻礙逃生，並含有有害物質。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>不完全燃燒（如塑膠、木材）</li>
+        </ul>
+        <h4>影響：</h4>
+        <ul>
+            <li>視線遮蔽</li>
+            <li>窒息</li>
+            <li>恐慌</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>以濕布掩住口鼻，減少吸入煙塵。</li>
+            <li>沿牆面匍匐前進（煙霧上升，地面能見度較高）。</li>
+            <li>若視線完全受阻，勿盲目移動，待救援並發出聲響。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>安裝「煙霧警報器」並定期測試。</li>
+            <li>減少使用易燃裝潢材料（如泡棉隔音板）。</li>
+        </ul></div>
+
+        <h3 id="rapid-spread" class="collapsible">迅速蔓延</h3>
+        <div class="collapsible-content">
+        <p>火勢會在短時間內迅速擴散，危及生命財產安全。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>通風助燃（煙囪效應）</li>
+            <li>易燃材料</li>
+        </ul>
+        <h4>影響：</h4>
+        <ul>
+            <li>逃生時間縮短</li>
+            <li>擴大災害範圍</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>發現火災立即逃生，勿浪費時間收拾財物。</li>
+            <li>關閉身後門窗以延緩火勢擴散。</li>
+            <li>預先規劃兩條以上逃生路線。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>保持逃生通道暢通（勿堆放雜物）。</li>
+            <li>建築設計需符合防火區劃規範（如防火牆）。</li>
+        </ul></div>
+
+        <h3 id="toxic-gases-characteristics" class="collapsible">毒性氣體</h3>
+        <div class="collapsible-content">
+        <p>火災產生的有毒氣體（如一氧化碳）會導致中毒甚至死亡。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>合成材料燃燒（如傢俱、電線絕緣層）</li>
+        </ul>
+        <h4>影響：</h4>
+        <ul>
+            <li>中毒</li>
+            <li>昏迷</li>
+            <li>致命（如一氧化碳）</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>優先撤離至上風處或高樓層。</li>
+            <li>若吸入毒氣出現暈眩，盡快移至通風處並就醫。</li>
+            <li>使用防煙面罩（如有備）。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>選擇低毒性建材（如無鹵素電線）。</li>
+            <li>確保通風系統可排除燃燒廢氣。</li>
+        </ul>
+        </div>
+
+        <h2 id="effects-on-humans">火災對人體的影響</h2>
+        <h3 id="choking" class="collapsible">嗆傷</h3>
+        <div class="collapsible-content">
+        <p>吸入濃煙和有毒氣體會刺激呼吸道，導致嗆傷。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>吸入高溫煙霧</li>
+            <li>有毒氣體（如一氧化碳）</li>
+        </ul>
+        <h4>症狀：</h4>
+        <ul>
+            <li>呼吸困難</li>
+            <li>咳嗽</li>
+            <li>昏迷</li>
+            <li>窒息</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>低姿勢逃生（煙霧上升，地面空氣較乾淨）。</li>
+            <li>濕布掩口鼻（減少吸入顆粒物，但無法過濾毒氣）。</li>
+            <li>避免說話或深呼吸，減少肺部傷害。</li>
+            <li>若已吸入濃煙，即使看似無礙，仍需就醫（一氧化碳中毒可能延遲發作）。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>安裝「煙霧警報器」及「一氧化碳偵測器」。</li>
+            <li>優先選用低毒性建材（如無鹵素電線、防火傢俱）。</li>
+        </ul></div>
+        <h3 id="heat-injury"class="collapsible">熱傷害</h3>
+        <div class="collapsible-content">
+        <p>高溫可能導致燒傷和熱衰竭等熱傷害。</p>
+        <h4>類型：</h4>
+        <ul>
+            <li>灼傷（皮膚）</li>
+            <li>熱衰竭（脫水）</li>
+            <li>吸入性灼傷（呼吸道）</li>
+        </ul>
+        <h4>危險性：</h4>
+        <ul>
+            <li>高溫導致休克</li>
+            <li>器官損傷</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>立即冷卻灼傷處：用常溫水沖洗15分鐘以上，勿用冰塊（避免組織凍傷）。</li>
+            <li>脫除燃燒衣物，但若黏附皮膚勿強撕。</li>
+            <li>補充水分（若意識清醒），避免熱衰竭。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>廚房等高風險區域設置「防火毯」及滅火器。</li>
+            <li>穿戴防火材質衣物（如天然纖維比合成纖維不易燃燒）。</li>
+        </ul></div>
+
+        <h3 id="panic-escape-difficulty" class="collapsible">驚慌逃生困難</h3>
+        <div class="collapsible-content">
+        <p>火災現場的混亂和恐懼可能導致逃生困難。</p>
+        <h4>常見原因：</h4>
+        <ul>
+            <li>視線受阻</li>
+            <li>方向迷失</li>
+            <li>群眾推擠</li>
+        </ul>
+        <h4>影響：</h4>
+        <ul>
+            <li>延誤逃生</li>
+            <li>跌倒踩踏</li>
+            <li>錯誤決策</li>
+        </ul>
+        <h4>應對方法：</h4>
+        <ol>
+            <li>預先演練逃生路線（尤其公共場所、家庭）。</li>
+            <li>保持冷靜，觸摸門把確認溫度後再開門（若燙手則改道）。</li>
+            <li>避免推擠，用扶手或牆面導引移動（濃煙中易迷失方向）。</li>
+        </ol>
+        <h4>預防措施：</h4>
+        <ul>
+            <li>確保逃生通道暢通（勿堆積雜物）。</li>
+            <li>安裝「緊急照明燈」及「螢光逃生指示標誌」。</li>
+        </ul></div>
+
+    <script>
+        const toggleDarkModeButton = document.getElementById('toggleDarkMode');
+        const pageBody = document.getElementById('pageBody');
+        const darkModeClassName = 'dark-mode';
+
+        toggleDarkModeButton.addEventListener('click', () => {
+            pageBody.classList.toggle(darkModeClassName);
+            if (pageBody.classList.contains(darkModeClassName)) {
+                localStorage.setItem('darkMode', 'enabled');
+                toggleDarkModeButton.textContent = '切換一般模式';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                toggleDarkModeButton.textContent = '切換護眼模式';
+            }
+        });
+
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            pageBody.classList.add(darkModeClassName);
+            toggleDarkModeButton.textContent = '切換一般模式';
+        }
+
+
+
+        const collapsibleHeaders = document.querySelectorAll('.collapsible');
+
+        collapsibleHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content && content.classList.contains('collapsible-content')) {
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                    // 手風琴效果：關閉其他已展開的內容
+                    collapsibleHeaders.forEach(otherHeader => {
+                        if (otherHeader !== this && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            const otherContent = otherHeader.nextElementSibling;
+                            if (otherContent && otherContent.classList.contains('collapsible-content')) {
+                                otherContent.style.display = 'none';
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // 頁面載入時，預設收起所有內容 (除了第一個，您可以根據需要調整)
+        const collapsibleContents = document.querySelectorAll('.collapsible-content');
+        collapsibleContents.forEach((content, index) => {
+            if (index > 0) { // 預設展開第一個，如果不需要可以改成 index >= 0
+                content.style.display = 'none';
+                content.previousElementSibling.classList.remove('active');
+            } else {
+                content.style.display = 'block'; // 預設顯示第一個
+                content.previousElementSibling.classList.add('active');
+            }
+        });
+
+    </script>
+</body>
+</html>
