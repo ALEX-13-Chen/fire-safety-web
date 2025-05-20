@@ -301,255 +301,348 @@
 
         let currentQuestionIndex = 0;
         let userAnswers = [];
-   const questions = [
+        const questions = [
         {
             question: "烹飪時是否會離開廚房",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 2, 4],
-            recommendation: "專注於烹飪上，以免發生意外。"
+            recommendation: "專注於烹飪上，以免發生意外。",
         },
         {
             question: "烹飪完畢時是否有確認瓦斯有完全關閉",
             options: ["從不", "偶爾", "經常"],
             weights: [4, 2, 0],
-            recommendation: "養成確認的好習慣，減少危險因子。"
+            recommendation: "養成確認的好習慣，減少危險因子。",
         },
+
         {
             question: "是否有發生過瓦斯外洩的情形",
             options: ["從不", "一兩次", "三次以上"],
             weights: [0, 2, 4],
-            recommendation: "請專家來檢查並維護。"
+            recommendation: "請專家來檢查並維護。",
         },
+
         {
             question: "家中是否有人抽菸並且會亂扔菸蒂",
             options: ["無", "一位", "兩位或以上"],
             weights: [0, 2, 4],
-            recommendation: "菸蒂請在菸灰缸熄滅，以免發生意外。"
+            recommendation: "菸蒂請在菸灰缸熄滅，以免發生意外",
         },
+
         {
             question: "家中是否會使用蠟燭",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 1, 2],
-            recommendation: "注意蠟燭的擺放位置，盡量遠離易燃物，如：窗簾。"
+            recommendation: "注意蠟燭的擺放位置，盡量遠離易燃物，如：窗簾。",
         },
+
         {
             question: "家中是否有人照護小孩",
             options: ["無", "有"],
             weights: [4, 0],
-            recommendation: "要有人照顧家中小孩，並且將危險物品放在小孩拿不到的位置。"
+            recommendation: "要有人照顧家中小孩，並且將危險物品放在小孩拿不到的位置\n",
         },
+
         {
             question: "家裡是否有祭祀習慣",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 2, 4],
-            recommendation: "注意香爐的位置，其附近不要放易燃物，避免香灰點燃。"
+            recommendation: "注意香爐的位置，其附近不要放易燃物，避免香灰點燃。",
         },
+
         {
             question: "是否會在戶外用火(烤肉、燒金紙等)",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 2, 4],
-            recommendation: "要準備滅火用具，方能隨時應對緊急狀況。"
+            recommendation: "要準備滅火用具，方能隨時應對緊急狀況。",
         },
         {
             question: "您家中是否連接多個高功率電器？",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 3, 6],
-            recommendation: "避免同時使用多個高功率電器，以防電線過載。"
+            recommendation: "避免同時使用多個高功率電器，以防電線過載。",
         },
+
         {
             question: "您家中是否使用多個插線板串接？",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 3, 5],
-            recommendation: "避免同時使用多個插線板串接，以防電線過載。"
+            recommendation: "避免同時使用多個插線板串接，以防電線過載。",
         },
+
         {
             question: "您家插座是否發熱或有焦味？",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 4, 8],
-            recommendation: "發熱和焦味代表已有電線過載情況，請立即停止電器或拔掉插頭。"
+            recommendation:
+            "發熱和焦味代表已有電線過載情況，請立即停止電器或拔掉插頭。",
         },
+
         {
             question: "您家中的插座是否鬆動或破損？",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 3, 6],
-            recommendation: "避免使用鬆動或破損插座，以防出現短路走火。"
+            recommendation: "避免使用鬆動或破損插座，以防出現短路走火。",
         },
+
+        // 電線老化
         {
             question: "您家的電線使用是否超過 10 年？",
             options: ["否", "部分是", "是"],
             weights: [0, 3, 6],
-            recommendation: "更換電線，或檢查線路，以防出現走火。"
+            recommendation: "更換電線，或檢查線路，以防出現走火。",
         },
+
         {
             question: "您家的電線是否有龜裂、硬化、變色？",
             options: ["否", "部分是", "是"],
             weights: [0, 4, 8],
-            recommendation: "立即更換電線，以防出現走火。"
+            recommendation: "立即更換電線，以防出現走火。",
         },
+
         {
             question: "您家的電線是否有漏電現象？",
             options: ["否", "是"],
             weights: [0, 10],
-            recommendation: "立即更換電線，以防出現走火。"
+            recommendation: "立即更換電線，以防出現走火。",
         },
+
         {
             question: "您家的電線是否使用老式鋁線？",
             options: ["否", "部分是", "是"],
             weights: [0, 4, 6],
-            recommendation: "立即更換電線。"
+            recommendation: "立即更換電線。",
         },
+
         {
             question: "您家是否有非專業私拉電線？",
             options: ["否", "是"],
             weights: [0, 7],
-            recommendation: "立刻停止私拉電線迴路，並請專業電工檢查。"
+            recommendation: "立刻停止私拉電線迴路，並請專業電工檢查。",
         },
+
         {
             question: "您家接線是否無絕緣或接線盒？",
             options: ["否", "是"],
             weights: [0, 7],
-            recommendation: "立刻請專業電工檢查，並做後續處理。"
+            recommendation: "立刻請專業電工檢查，並做後續處理。",
         },
+
         {
             question: "您家電線是否穿越門縫或地板？",
             options: ["否", "是"],
             weights: [0, 5],
-            recommendation: "立刻觀察電線狀態，如有破損建議請專業電工檢查，並做後續處理。"
+            recommendation:
+            "立刻觀察電線狀態，如有破損建議請專業電工檢查，並做後續處理。",
         },
+
         {
             question: "您家是否擅自改裝電器/插座？",
             options: ["否", "是"],
             weights: [0, 6],
-            recommendation: "立刻請專業電工檢查，並做後續處理。"
+            recommendation: "立刻請專業電工檢查，並做後續處理。",
         },
+
         {
             question: "您的手機是否整夜充電並放枕邊？",
             options: ["否", "是"],
             weights: [0, 6],
-            recommendation: "盡量不要充過夜，實在不行更改位置。"
+            recommendation: "盡量不要充過夜，實在不行更改位置。",
         },
+
         {
             question: "您的手機是否使用非原廠充電器？",
             options: ["否", "是"],
             weights: [0, 5],
-            recommendation: "檢查商標、規格、商家信譽，避免受不規範充電器影響。"
+            recommendation: "檢查商標、規格、商家信譽，避免受不規範充電器影響。",
         },
+
         {
             question: "您的手機充電時是否過熱或覆蓋？",
             options: ["否", "部分是", "是"],
             weights: [0, 3, 5],
-            recommendation: "立即更換手機，或將手機送去維修。"
+            recommendation: "立即更換手機，或將手機送去維修。",
         },
+
         {
             question: "您的手機是否長時間貼身與人體接觸？",
             options: ["否", "偶爾", "總是"],
             weights: [0, 2, 4],
-            recommendation: "如果有上述情況，使用時請小心。"
+            recommendation: "如果有上述情況，使用時請小心。",
         },
+
+        // 建築設施隱患
         {
-            question: "是否有足夠且暢通的緊急出口，緊急出口是否達法規數量且無阻塞？",
-            options: ["從不", "偶爾", "經常"],
-            weights: [0, 1, 3],
-            recommendation: "改善緊急出口"
+            question:
+            "建築設施內是否有足夠且暢通的緊急出口，緊急出口是否達法規數量且無阻塞？",
+            options: ["充足", "少量", "完全沒有"],
+            weights: [0, 2, 5],
+            recommendation: "改善緊急出口數量以及保持暢通",
         },
+
         {
-            question: "是否有安裝消防警報系統，建築內部是否有裝設煙霧/熱感應警報器？？ ",
+            question:
+            "建築設施內是否有安裝消防警報系統，建築內部是否有裝設煙霧/熱感應警報器？",
+            options: ["充足", "少量", "完全沒有"],
+            weights: [0, 2, 5],
+            recommendation: "安裝消防警報系統",
+        },
+
+        {
+            question: "建築設施內是否有灑水系統（Sprinkler）？",
+            options: ["充足", "少量", "完全沒有"],
+            weights: [0, 2, 5],
+            recommendation: "安裝自動灑水系統",
+        },
+
+        {
+            question:
+            "建築設施內電線是否老化或亂接，是否存在明顯的老化電線或私拉亂接？",
+            options: ["無", "偶爾", "經常"],
+            weights: [0, 2, 5],
+            recommendation: "檢修電線情形",
+        },
+
+        {
+            question: "建築設施內消防器材是否齊全，是否配備滅火器、消防栓等設施？",
+            options: ["充足", "少量", "完全沒有"],
+            weights: [0, 2, 5],
+            recommendation: "補足消防器材",
+        },
+
+        {
+            question: "建築設施內的是否有使用大量易燃建材（如木材、泡棉）？",
+            options: ["無", "少量", "多數"],
+            weights: [0, 2, 5],
+            recommendation: "將易燃建材替換掉",
+        },
+
+        {
+            question:
+            "建築設施內通風設計是否良好，是否有足夠排煙設施、防止濃煙擴散？ ",
+            options: ["是", "一般", "無"],
+            weights: [0, 2, 5],
+            recommendation: "改善通風系統",
+        },
+
+        {
+            question: "您是否將酒精、油漆或瓦斯罐等可燃物品隨意放置在陽台？ ",
             options: ["從不", "偶爾", "有明顯堆放 "],
             weights: [0, 2, 5],
-            recommendation: "安裝火警警報器與改善通風系統 "
+            recommendation:
+            "這類易燃液體若長期曝曬易起火，應集中儲放於陰涼通風處，並標示內容避免誤用。 ",
         },
+
         {
-            question: " 是否有灑水系統，是否有自動灑水系統（Sprinkler）？",
+            question: "您是否在儲藏室中堆放大量紙箱或雜物，導致空間擁擠或不通風？ ",
             options: ["從不", "少量堆放 ", "堆滿整間 "],
             weights: [0, 2, 5],
-            recommendation: "安裝自動灑水系統 "
+            recommendation:
+            "紙箱屬可燃物，堆積過多易助燃並阻礙逃生，應定期清理並保留通風與通道空間。 ",
         },
+
         {
-            question: "電線是否老化或亂接，是否存在明顯的老化電線或私拉亂接？ ",
+            question: "您是否將噴霧罐與其他雜物混放在同一處？ ",
             options: ["無噴霧罐或分開存放 ", "偶爾混放 ", "經常混放 "],
             weights: [0, 2, 5],
-            recommendation: "檢修電線 "
+            recommendation:
+            "噴霧罐為壓力可燃物，應與雜物分開存放於陰涼區，避免爆炸與火源接觸。 ",
         },
+
         {
-            question: "消防器材是否齊全\t是否配備滅火器、消防栓等設施？\t ",
+            question: "您是否將抹布或紙巾暫放在瓦斯爐或烤箱旁？ ",
             options: ["不會 ", "有時 ", "經常 "],
             weights: [0, 3, 5],
-            recommendation: "補足消防器材 "
+            recommendation:
+            "抹布與紙巾易燃，靠近火源風險高，應於使用後立即收納，保持爐具周圍清潔。 ",
         },
+
         {
-            question: " 建材是否易燃，是否使用大量易燃建材（如木材、泡棉）？",
+            question: "您是否將噴油罐或酒精等易燃液體放置於高溫或火源附近？ ",
             options: ["沒有 ", "偶爾 ", "有明顯放置 "],
             weights: [0, 3, 5],
-            recommendation: "替換易燃建材 "
+            recommendation:
+            "此類物品遇熱易燃爆，應遠離火源與高溫，改放置於陰涼通風且標示清楚的區域。 ",
         },
+
         {
-            question: "通風設計是否良好\t是否有足夠排煙設施、防止濃煙擴散？ ",
+            question: "吹風機或捲髮棒使用後，您是否在未冷卻的情況下直接收進櫃子？ ",
             options: ["從不 ", "偶爾 ", "有時會 "],
             weights: [0, 2, 4],
-            recommendation: "改善通風系統 "
+            recommendation:
+            "高溫電器若未冷卻即接觸毛巾或塑膠材，易引燃，應待冷卻後再收納於通風乾燥處。 ",
+        },
+
+        {
+            question: "您是否讓延長線穿越濕區，或與毛巾、衣物混放交疊？ ",
+            options: ["完全避免 ", "偶爾會 ", "有明顯交疊 "],
+            weights: [0, 2, 4],
+            recommendation:
+            "潮濕環境加上可燃物壓住電線易短路起火，應避免跨濕區，並使用防水設計插座。 ",
+        },
+
+        {
+            question: "您是否曾將尚未熄滅的煙蒂或香灰直接丟入垃圾桶？ ",
+            options: ["完全避免 ", "偶爾會 ", "有發生過 "],
+            weights: [0, 3, 5],
+            recommendation:
+            "煙蒂殘餘熱源可引燃垃圾，應確實熄滅後再丟棄，並避免使用可燃材質垃圾桶。 ",
         },
         {
-        question: "您是否清楚家中的逃生路線？",
-        options: ["非常清楚", "略懂一二", "完全不清楚"],
-        weights: [0, 2, 4],
-        recommendation: "請在家中規劃並熟悉逃生路線，提高應變能力。"
-    },
-    {
-        question: "家人是否知道如何使用滅火器？",
-        options: ["都知道", "部分人知道", "沒人知道"],
-        weights: [0, 2, 4],
-        recommendation: "請教導家人正確使用滅火器，避免初期火勢擴大。"
-    },
-    {
-        question: "是否曾在廚房內存放大量雜物（如紙袋、塑膠袋）？",
-        options: ["從不", "偶爾", "經常"],
-        weights: [0, 2, 4],
-        recommendation: "清除廚房雜物，避免影響逃生或助燃。"
-    },
-    {
-        question: "是否曾讓孩童接觸火柴、打火機等火源物品？",
-        options: ["從不", "偶爾", "經常"],
-        weights: [0, 3, 5],
-        recommendation: "避免讓孩童接觸火源，應妥善收納危險物品。"
-    },
-    {
-        question: "是否會在陽台焚燒金紙或雜物？",
-        options: ["從不", "偶爾", "經常"],
-        weights: [0, 3, 5],
-        recommendation: "焚燒行為應在安全處進行，遠離住家結構。"
-    },
-    {
-        question: "是否有年長者或失智症患者無人照看？",
-        options: ["無", "偶爾", "經常"],
-        weights: [0, 3, 5],
-        recommendation: "請安排照顧人力，避免年長者誤操作爐火或設備。"
-    },
-    {
-        question: "是否有家人吸菸後未確認菸蒂完全熄滅即丟棄？",
-        options: ["從不", "偶爾", "經常"],
-        weights: [0, 2, 4],
-        recommendation: "務必將菸蒂完全熄滅再丟棄，並使用金屬煙灰缸。"
-    },
-    {
-        question: "您是否曾關閉過煙霧警報器因為覺得「太吵」？",
-        options: ["從不", "一兩次", "多次"],
-        weights: [0, 3, 5],
-        recommendation: "煙霧警報器是保命設備，請勿隨意關閉。"
-    },
-    {
-        question: "是否曾發現火災隱患後仍未處理（如聞到異味、煙霧）？",
-        options: ["從不", "偶爾", "經常"],
-        weights: [0, 3, 5],
-        recommendation: "遇到異常狀況應即時處理，勿抱持僥倖心態。"
-    },
-    {
-        question: "是否曾因害怕被罰而隱瞞火災或未報案？",
-        options: ["從不", "偶爾", "有過"],
-        weights: [0, 4, 6],
-        recommendation: "應以安全為優先，立即通報火警避免災情擴大。"
-    }
-
-];
+            question: "家人是否知道如何使用滅火器？",
+            options: ["都知道", "部分人知道", "沒人知道"],
+            weights: [0, 2, 4],
+            recommendation: "請教導家人正確使用滅火器，避免初期火勢擴大。",
+        },
+        {
+            question: "是否曾在廚房內存放大量雜物（如紙袋、塑膠袋）？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 2, 4],
+            recommendation: "清除廚房雜物，避免影響逃生或助燃。",
+        },
+        {
+            question: "是否曾讓孩童接觸火柴、打火機等火源物品？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 5],
+            recommendation: "避免讓孩童接觸火源，應妥善收納危險物品。",
+        },
+        {
+            question: "是否會在陽台焚燒金紙或雜物？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 5],
+            recommendation: "焚燒行為應在安全處進行，遠離住家結構。",
+        },
+        {
+            question: "是否有年長者或失智症患者無人照看？",
+            options: ["無", "偶爾", "經常"],
+            weights: [0, 3, 5],
+            recommendation: "請安排照顧人力，避免年長者誤操作爐火或設備。",
+        },
+        {
+            question: "是否有家人吸菸後未確認菸蒂完全熄滅即丟棄？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 2, 4],
+            recommendation: "務必將菸蒂完全熄滅再丟棄，並使用金屬煙灰缸。",
+        },
+        {
+            question: "您是否曾關閉過煙霧警報器因為覺得「太吵」？",
+            options: ["從不", "一兩次", "多次"],
+            weights: [0, 3, 5],
+            recommendation: "煙霧警報器是保命設備，請勿隨意關閉。",
+        },
+        {
+            question: "是否曾發現火災隱患後仍未處理（如聞到異味、煙霧）？",
+            options: ["從不", "偶爾", "經常"],
+            weights: [0, 3, 5],
+            recommendation: "遇到異常狀況應即時處理，勿抱持僥倖心態。",
+        },
+        {
+            question: "是否曾因害怕被罰而隱瞞火災或未報案？",
+            options: ["從不", "偶爾", "有過"],
+            weights: [0, 4, 6],
+            recommendation: "應以安全為優先，立即通報火警避免災情擴大。",
+        },
+        ];
 
         function showQuestion() {
             const currentQuestion = questions[currentQuestionIndex];
