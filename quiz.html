@@ -239,7 +239,7 @@
     }
 
     .dark-mode .recommendation-text {
-        color: #ffc107 !important;
+        color: #e6ff00 !important;
         font-size: 1.1em !important;
     }
 
@@ -265,6 +265,167 @@
         background-color: #5a6268 !important;
     }
 
+    #question-progress {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    }
+
+    #question-number {
+        font-size: 1.1em;
+        color: #000000;
+    }
+
+    #progress-bar-container {
+        background-color: #eee;
+        border-radius: 5px;
+        height: 10px;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    #progress-bar {
+        background-color: #3498db;
+        height: 100%;
+        width: 0%;
+        border-radius: 5px;
+        transition: width 0.3s ease;
+    }
+    .dark-mode #progress-bar-container {
+        background-color: #555 !important; /* 深灰色背景 */
+    }
+
+    .dark-mode #progress-bar {
+        background-color: #ffc107 !important; /* 黃色進度條 */
+    }
+    .dark-mode #question-number{
+         color: #ffffff;
+    }
+
+
+    #risk-assessment-block, #recommendations-block, #summary-block {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #risk-assessment-block h3, #recommendations-block h3, #summary-block h3 {
+        color: #3498db;
+        margin-top: 0;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .recommendations-slider-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+    }
+
+    .recommendations-slide {
+        flex: 0 0 100%;
+        padding-right: 20px;
+        scroll-snap-align: start;
+    }
+
+    .recommendations-slide:last-child {
+        padding-right: 0;
+    }
+
+    .recommendations-slide h4 {
+        color: #2ecc71;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .recommendations-slide ul {
+        padding-left: 20px;
+        list-style-type: disc;
+    }
+
+    .recommendations-slide li {
+        margin-bottom: 10px;
+    }
+
+    .slider-navigation {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .slider-navigation button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: white;
+        cursor: pointer;
+    }
+
+    .slider-navigation button:disabled {
+        background-color: #ccc;
+        cursor: default;
+    }
+
+    #slide-indicator {
+        font-size: 1em;
+        color: #555;
+    }
+
+    /* 深色模式下的樣式調整 */
+    .dark-mode #risk-assessment-block, .dark-mode #recommendations-block, .dark-mode #summary-block {
+        background-color: #444 !important;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode #risk-assessment-block h3, .dark-mode #recommendations-block h3, .dark-mode #summary-block h3 {
+        color: #ffc107 !important;
+        border-bottom-color: #ffc107 !important;
+    }
+
+    .dark-mode .recommendations-slide h4 {
+        color: #a7f070 !important;
+    }
+
+    .dark-mode .slider-navigation button {
+        background-color: #ffc107 !important;
+        color: #333 !important;
+    }
+
+    .dark-mode #slide-indicator {
+        color: #eee !important;
+    }
+
+    .risk-description {
+        font-size: 0.75em;
+        color: #777; 
+        margin-top: 0.5em;
+        line-height: 1.5;
+        text-align: left; 
+    }
+
+    .risk-suggestion {
+        font-size: 0.75em;
+        color: #555; 
+        margin-top: 0.5em;
+        line-height: 1.5;
+        font-weight: bold;
+        text-align: left; 
+    }
+    .dark-mode .risk-description {
+        color: #ebe8e4bd;
+    }
+    .dark-mode .risk-suggestion{
+        color:#c2e7ff
+    }
+
+
 </style>
 </head>
 <body>
@@ -276,6 +437,12 @@
 
     <div id="quiz-container" class="quiz-container">
         <h2>火災隱患測驗</h2>
+        <div id="question-progress">
+            <span id="question-number"></span>
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+        </div>
         <div id="question-container">
             </div>
         <div id="navigation-buttons">
@@ -283,25 +450,76 @@
         </div>
     </div>
 
-    <div id="results-container" class="results-container hidden">
-        <h2>測驗結果</h2>
+<div id="results-container" class="results-container hidden">
+    <h2>測驗結果</h2>
+    <div id="risk-assessment-block">
+        <h3>風險評估</h3>
         <div id="risk-level" class="risk-level"></div>
-        <div id="recommendations"></div>
-        <a href="index.html" class="next-button">回到主頁面</a>
     </div>
 
-    <script>
-        const quizContainer = document.getElementById('quiz-container');
-        const questionContainer = document.getElementById('question-container');
-        const nextButton = document.getElementById('next-button');
-        const prevButton = document.getElementById('prev-question');
-        const resultsContainer = document.getElementById('results-container');
-        const riskLevelDisplay = document.getElementById('risk-level');
-        const recommendationsDisplay = document.getElementById('recommendations');
+   <div id="recommendations-block">
+        <h3>改善建議</h3>
+        <div style="display: flex; align-items: center;">
+            <button id="prev-slide" style="padding: 8px 15px; border: none; border-radius: 5px; background-color: #3498db; color: white; cursor: pointer; margin-right: 10px;" disabled>&lt;</button>
+            <div style="flex-grow: 1;">
+                <div id="low-risk-recommendations">
+                    <h4>低風險項目建議</h4>
+                    <ul id="low-risk-list">
+                        <p id="low-risk-empty" style="display:none;">您的低風險項目良好！</p>
+                    </ul>
+                </div>
+                <div id="medium-risk-recommendations" style="margin-top: 20px;">
+                    <h4>中風險項目建議</h4>
+                    <ul id="medium-risk-list">
+                        <p id="medium-risk-empty" style="display:none;">您的中風險項目良好！</p>
+                    </ul>
+                </div>
+                <div id="high-risk-recommendations" style="margin-top: 20px;">
+                    <h4>高風險項目建議</h4>
+                    <ul id="high-risk-list">
+                        <p id="high-risk-empty" style="display:none;">您的部分高風險項目良好！</p>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <span id="slide-indicator">1/3</span>
+                </div>
+            </div>
+            <button id="next-slide" style="padding: 8px 15px; border: none; border-radius: 5px; background-color: #3498db; color: white; cursor: pointer; margin-left: 10px;">&gt;</button>
+        </div>
+    </div>
 
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        const questions = [
+    <div id="summary-block">
+        <h3>總結</h3>
+        <p>本評估系統以專業消防知識為基礎，協助您辨識生活中容易被忽略的火災風險。評分愈高，代表需採取愈積極的行動。請將本風險評估結果視為警訊，逐步改善問題，為自己與家人的安全多一分保障.<br>如需協助或專業諮詢，請洽當地消防單位或合格電工進行檢修與改善建議。</p>
+    </div>
+    <a href="index.html" class="next-button">回到主頁面</a>
+</div>
+
+
+   <script>
+    const quizContainer = document.getElementById('quiz-container');
+    const questionContainer = document.getElementById('question-container');
+    const nextButton = document.getElementById('next-button');
+    const prevButton = document.getElementById('prev-question');
+    const resultsContainer = document.getElementById('results-container');
+    const riskLevelDisplay = document.getElementById('risk-level');
+    const recommendationsDisplay = document.getElementById('recommendations');
+    const lowRiskRecommendationsDiv = document.getElementById('low-risk-recommendations');
+    const mediumRiskRecommendationsDiv = document.getElementById('medium-risk-recommendations');
+    const highRiskRecommendationsDiv = document.getElementById('high-risk-recommendations');
+    const lowRiskList = document.getElementById('low-risk-list');
+    const mediumRiskList = document.getElementById('medium-risk-list');
+    const highRiskList = document.getElementById('high-risk-list');
+    const lowRiskEmpty = document.getElementById('low-risk-empty');
+    const mediumRiskEmpty = document.getElementById('medium-risk-empty');
+    const highRiskEmpty = document.getElementById('high-risk-empty');
+    const prevSlideButton = document.getElementById('prev-slide');
+    const nextSlideButton = document.getElementById('next-slide');
+    const slideIndicator = document.getElementById('slide-indicator');
+
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    const questions = [
         {
             question: "烹飪時是否會離開廚房",
             options: ["從不", "偶爾", "經常"],
@@ -310,8 +528,8 @@
         },
         {
             question: "烹飪完畢時是否有確認瓦斯有完全關閉",
-            options: ["從不", "偶爾", "經常"],
-            weights: [4, 2, 0],
+            options: ["經常", "偶爾","從不"],
+            weights: [0,2,4],
             recommendation: "養成確認的好習慣，減少危險因子。",
         },
 
@@ -338,8 +556,8 @@
 
         {
             question: "家中是否有人照護小孩",
-            options: ["無", "有"],
-            weights: [4, 0],
+            options: ["無", "有","沒有小孩"],
+            weights: [4, 0,0],
             recommendation: "要有人照顧家中小孩，並且將危險物品放在小孩拿不到的位置\n",
         },
 
@@ -351,7 +569,7 @@
         },
 
         {
-            question: "是否會在戶外用火(烤肉、燒金紙等)",
+            question: "是否會在住家附近用火(烤肉、燒金紙等)",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 2, 4],
             recommendation: "要準備滅火用具，方能隨時應對緊急狀況。",
@@ -359,15 +577,15 @@
         {
             question: "您家中是否連接多個高功率電器？",
             options: ["從不", "偶爾", "經常"],
-            weights: [0, 3, 6],
+            weights: [0, 4, 8],
             recommendation: "避免同時使用多個高功率電器，以防電線過載。",
         },
 
         {
-            question: "您家中是否使用多個插線板串接？",
+            question: "您家中是否使用多個延長線串接？",
             options: ["從不", "偶爾", "經常"],
             weights: [0, 3, 5],
-            recommendation: "避免同時使用多個插線板串接，以防電線過載。",
+            recommendation: "避免同時使用多個延長線串接，以防電線過載。",
         },
 
         {
@@ -408,7 +626,7 @@
         },
 
         {
-            question: "您家的電線是否使用老式鋁線？",
+            question: "您家的電線是否使用老式鋁線？(通常於屋齡大於50年會出現)",
             options: ["否", "部分是", "是"],
             weights: [0, 4, 6],
             recommendation: "立即更換電線。",
@@ -422,7 +640,7 @@
         },
 
         {
-            question: "您家接線是否無絕緣或接線盒？",
+            question: "您家接線是否無絕緣或接線盒？(接線是指電線與電線交接處)",
             options: ["否", "是"],
             weights: [0, 7],
             recommendation: "立刻請專業電工檢查，並做後續處理。",
@@ -494,15 +712,6 @@
             weights: [0, 2, 5],
             recommendation: "安裝自動灑水系統",
         },
-
-        {
-            question:
-            "建築設施內電線是否老化或亂接，是否存在明顯的老化電線或私拉亂接？",
-            options: ["無", "偶爾", "經常"],
-            weights: [0, 2, 5],
-            recommendation: "檢修電線情形",
-        },
-
         {
             question: "建築設施內消防器材是否齊全，是否配備滅火器、消防栓等設施？",
             options: ["充足", "少量", "完全沒有"],
@@ -542,7 +751,7 @@
         },
 
         {
-            question: "您是否將噴霧罐與其他雜物混放在同一處？ ",
+            question: "您是否將噴霧罐與其他雜物混放在同一處？(如殺蟲劑) ",
             options: ["無噴霧罐或分開存放 ", "偶爾混放 ", "經常混放 "],
             weights: [0, 2, 5],
             recommendation:
@@ -642,106 +851,223 @@
             weights: [0, 4, 6],
             recommendation: "應以安全為優先，立即通報火警避免災情擴大。",
         },
-        ];
 
-        function showQuestion() {
-            const currentQuestion = questions[currentQuestionIndex];
-            questionContainer.innerHTML = `
-                <div class="question">${currentQuestion.question}</div>
-                <div class="options">
-                    ${currentQuestion.options.map((option, index) => `
-                        <label><input type="radio" name="q${currentQuestionIndex}" value="${index}">${option}</label><br>
-                    `).join('')}
-                </div>
-            `;
+    ];
 
-            // 顯示或隱藏「回上題」按鈕
-            prevButton.classList.toggle('hidden', currentQuestionIndex === 0);
+    let currentSlide = 0;
+    const totalSlides = 3; // 低、中、高風險
+
+    function updateSliderNavigation() {
+        slideIndicator.textContent =`${currentSlide + 1}/${totalSlides}`;
+        prevSlideButton.disabled = currentSlide === 0;
+        nextSlideButton.disabled = currentSlide === totalSlides - 1;
+
+        lowRiskRecommendationsDiv.style.display = currentSlide === 0 ? 'block' : 'none';
+        mediumRiskRecommendationsDiv.style.display = currentSlide === 1 ? 'block' : 'none';
+        highRiskRecommendationsDiv.style.display = currentSlide === 2 ? 'block' : 'none';
+    }
+
+    function showQuestion() {
+        const currentQuestion = questions[currentQuestionIndex];
+        const totalQuestions = questions.length;
+        const questionNumberDisplay = document.getElementById('question-number');
+        const progressBar = document.getElementById('progress-bar');
+
+        questionNumberDisplay.textContent = `第 ${currentQuestionIndex + 1} 題 / 共 ${totalQuestions} 題`;
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        progressBar.style.width = `${progress}%`;
+
+        questionContainer.innerHTML = `
+            <div class="question">${currentQuestion.question}</div>
+            <div class="options">
+                ${currentQuestion.options.map((option, index) => `
+                    <label><input type="radio" name="q${currentQuestionIndex}" value="${index}">${option}</label><br>
+                `).join('')}
+            </div>
+        `;
+
+        prevButton.classList.toggle('hidden', currentQuestionIndex === 0);
+    }
+
+    function nextQuestion() {
+        const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+        if (!selectedOption) {
+            alert('請選擇一個答案。');
+            return;
         }
+        userAnswers[currentQuestionIndex] = parseInt(selectedOption.value);
+        currentQuestionIndex++;
 
-        function nextQuestion() {
-            const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
-            if (!selectedOption) {
-                alert('請選擇一個答案。');
-                return;
-            }
-            userAnswers[currentQuestionIndex] = parseInt(selectedOption.value);
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function prevQuestion() {
-            currentQuestionIndex--;
+        if (currentQuestionIndex < questions.length) {
             showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function prevQuestion() {
+        currentQuestionIndex--;
+        showQuestion();
+    }
+
+    function calculateRisk() {
+        let totalWeight = 0;
+        let maxTotalWeight = 0;
+        let specificRecommendations = [];
+
+        for (let i = 0; i < questions.length; i++) {
+            let questionMaxWeight = Math.max(...questions[i].weights);
+            let questionRiskLevel = "";
+
+            if (questionMaxWeight >= 1 && questionMaxWeight <= 4) {
+                questionRiskLevel = "低風險潛力";
+            } else if (questionMaxWeight >= 5 && questionMaxWeight <= 6) {
+                questionRiskLevel = "中風險潛力";
+            } else if (questionMaxWeight >= 7 && questionMaxWeight <= 10) {
+                questionRiskLevel = "高風險潛力";
+            } else {
+                questionRiskLevel = "極低風險潛力"; // 權重皆為 0 的情況
+            }
+
+            let userAnswerText = "未回答";
+            let userAnswerWeight = 0;
+            if (userAnswers[i] !== undefined) {
+                userAnswerText = questions[i].options[userAnswers[i]];
+                userAnswerWeight = questions[i].weights[userAnswers[i]];
+                totalWeight += userAnswerWeight;
+            }
+            maxTotalWeight += questionMaxWeight;
+
+            // 只針對使用者選擇的權重大於 0 的題目產生建議
+            if (userAnswers[i] !== undefined && questions[i].weights[userAnswers[i]] > 0) {
+                specificRecommendations.push(`<li><span>${questions[i].question}</span><br>您選擇了：${userAnswerText} (${userAnswerWeight} 分)<br><span class="recommendation-text">- ${questions[i].recommendation}</span> (此題潛在風險：${questionRiskLevel})</li>`);
+            }
+            // 如果使用者有回答，但權重是 0，我們仍然顯示使用者的選擇和該題的風險潛力，但不包含推薦
+            else if (userAnswers[i] !== undefined && questions[i].weights[userAnswers[i]] === 0) {
+                specificRecommendations.push(`<li><span>${questions[i].question}</span><br>您選擇了：${userAnswerText} (${userAnswerWeight} 分)<br>(此題潛在風險：${questionRiskLevel})</li>`);
+            }
+            // 如果沒有回答，也顯示題目和潛在風險
+            else if (userAnswers[i] === undefined) {
+                specificRecommendations.push(`<li><span>${questions[i].question}</span><br>您選擇了：未回答 (0 分)<br>(此題潛在風險：${questionRiskLevel})</li>`);
+            }
         }
 
-        function calculateRisk() {
-            let totalWeight = 0;
-            let specificRecommendations = [];
-            for (let i = 0; i < questions.length; i++) {
-                if (userAnswers[i] !== undefined) {
-                    totalWeight += questions[i].weights[userAnswers[i]];
-                    // 如果選擇了風險較高的選項（這裡我們簡單判斷權重是否大於 0），則加入該問題的建議
-                    if (questions[i].weights[userAnswers[i]] > 0) {
-                        specificRecommendations.push(`<li><span>${questions[i].question}</span><br><span class="recommendation-text">- ${questions[i].recommendation}</span></li>`);
+        let riskPercentage = (maxTotalWeight > 0) ? (totalWeight / maxTotalWeight) * 100 : 0;
+
+        return { percentage: riskPercentage.toFixed(2), score: totalWeight, recommendations: specificRecommendations };
+    }
+
+    function showResults() {
+    quizContainer.classList.add('hidden');
+    resultsContainer.classList.remove('hidden');
+    const results = calculateRisk();
+    const riskPercentage = parseFloat(results.percentage);
+    const totalScore = results.score;
+    let riskLevelText = "";
+    let riskDescription = "";
+    let riskSuggestion = "";
+
+    if (riskPercentage <= 25) {
+        riskLevelText = "低風險";
+        riskDescription = "此等級代表風險極低，居家用火與用電習慣良好，符合基本防火安全原則。此類項目多數為容易掌握且可控制之情境，例如使用原廠充電器、廚房整潔、插座無異常等。";
+        riskSuggestion = "建議：維持良好生活習慣，定期自我檢查，持續加強消防安全知識。即使風險低，也應避免因習慣鬆懈而導致意外。";
+    } else if (riskPercentage <= 59) {
+        riskLevelText = "中風險";
+        riskDescription = "此等級代表存在潛在火災隱患，雖不一定會立即引發火災，但若持續忽視或累積問題，將大幅提高災害發生機率。常見例子如：延長線串接過多、廚房雜物靠近火源、緊急出口數量不足、家人不熟滅火器操作等。";
+        riskSuggestion = "建議：應立即改善不當行為，重新規劃物品擺放位置、清理雜物、檢修電器、增設消防設備等。也建議家庭成員接受基本消防訓練，了解如何使用滅火器與進行火警應對。";
+    } else {
+        riskLevelText = "高風險";
+        riskDescription = "此等級代表高度火災風險，環境中可能已出現異常現象（如插座過熱、有焦味、電線龜裂、漏電），或行為嚴重違反用電與用火安全（如私接電線、火源無人看管等）。此等情況極易直接引發火災，後果嚴重，甚至危及生命。";
+        riskSuggestion = "建議：務必立即停用相關設備，請專業電工或消防人員進行全面檢查與修復。所有易燃物應即刻移除至安全處所，嚴禁使用破損電器或延長線。家庭應建立火災應變與逃生計畫，並進行實際演練。";
+    }
+
+    const riskLevelDisplay = document.getElementById('risk-level');
+    riskLevelDisplay.innerHTML = `您的火災風險程度為：${results.percentage}%，總分：${totalScore}，屬於<span style="font-weight: bold;">${riskLevelText}</span>
+    <p class="risk-description">${riskDescription}</p>
+    <p class="risk-suggestion">${riskSuggestion}</p>`;
+
+    lowRiskList.innerHTML = '';
+    mediumRiskList.innerHTML = '';
+    highRiskList.innerHTML = '';
+
+    let hasLowRisk = false;
+    let hasMediumRisk = false;
+    let hasHighRisk = false;
+
+    results.recommendations.forEach(recommendationHTML => {
+        if (recommendationHTML.includes('(') && recommendationHTML.includes('分)')) {
+            const scoreMatch = recommendationHTML.match(/\((\d+) 分\)/);
+            if (scoreMatch && parseInt(scoreMatch[1]) > 0) {
+                const li = document.createElement('li');
+                // 移除 (此題潛在風險：XXX) 這段文字
+                const cleanedRecommendationHTML = recommendationHTML.replace(/\s*\(此題潛在風險：.*?\)/, '');
+                li.innerHTML = cleanedRecommendationHTML;
+                const score = parseInt(scoreMatch[1]);
+                // 根據原始權重判斷風險等級
+                const questionIndex = results.recommendations.indexOf(recommendationHTML);
+                if (questionIndex >= 0) {
+                    const maxWeight = Math.max(...questions[questionIndex].weights);
+                    if (maxWeight >= 1 && maxWeight <= 4) {
+                        lowRiskList.appendChild(li);
+                        hasLowRisk = true;
+                    } else if (maxWeight >= 5 && maxWeight <= 6) {
+                        mediumRiskList.appendChild(li);
+                        hasMediumRisk = true;
+                    } else if (maxWeight >= 7 && maxWeight <= 10) {
+                        highRiskList.appendChild(li);
+                        hasHighRisk = true;
                     }
                 }
             }
-
-            let riskLevel = "";
-            if (totalWeight <= 5) {
-                riskLevel = "低風險";
-            } else if (totalWeight <= 10) {
-                riskLevel = "中風險";
-            } else {
-                riskLevel = "高風險";
-            }
-
-            return { level: riskLevel, score: totalWeight, recommendations: specificRecommendations };
         }
+    });
 
-        function showResults() {
-            quizContainer.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
-            const results = calculateRisk();
-            riskLevelDisplay.textContent = `您的火災風險等級為：${results.level} (總分：${results.score})`;
-            let recommendationsHTML = "<h3>改善建議：</h3><ul>" + results.recommendations.join('<br>') + "</ul>";
-            if (results.recommendations.length === 0) {
-                recommendationsHTML = "<p>您的風險評估結果良好，請繼續保持！</p>";
-            }
-            recommendationsDisplay.innerHTML = recommendationsHTML;
+    lowRiskEmpty.style.display = hasLowRisk ? 'none' : 'block';
+    mediumRiskEmpty.style.display = hasMediumRisk ? 'none' : 'block';
+    highRiskEmpty.style.display = hasHighRisk ? 'none' : 'block';
+
+    currentSlide = 0;
+    updateSliderNavigation(); // 初始顯示低風險
+}
+    prevSlideButton.addEventListener('click', () => {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSliderNavigation();
         }
+    });
 
-        nextButton.addEventListener('click', nextQuestion);
-        prevButton.addEventListener('click', prevQuestion);
+    nextSlideButton.addEventListener('click', () => {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateSliderNavigation();
+        }
+    });
 
-        showQuestion(); // 頁面載入時顯示第一個問題
+    nextButton.addEventListener('click', nextQuestion);
+    prevButton.addEventListener('click', prevQuestion);
+    showQuestion();
+    updateSliderNavigation(); // 頁面載入時更新滑動導航
 
-        // 添加護眼模式切換的 JavaScript 邏輯
-        const toggleDarkModeButton = document.getElementById('toggleDarkMode');
-        const pageBody = document.body; // 直接使用 body 元素
-        const darkModeClassName = 'dark-mode';
+    // 添加護眼模式切換的 JavaScript 邏輯
+    const toggleDarkModeButton = document.getElementById('toggleDarkMode');
+    const pageBody = document.body;
+    const darkModeClassName = 'dark-mode';
 
-        toggleDarkModeButton.addEventListener('click', () => {
-            pageBody.classList.toggle(darkModeClassName);
-            if (pageBody.classList.contains(darkModeClassName)) {
-                localStorage.setItem('darkMode', 'enabled');
-                toggleDarkModeButton.textContent = '切換一般模式';
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-                toggleDarkModeButton.textContent = '切換護眼模式';
-            }
-        });
-
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            pageBody.classList.add(darkModeClassName);
+    toggleDarkModeButton.addEventListener('click', () => {
+        pageBody.classList.toggle(darkModeClassName);
+        if (pageBody.classList.contains(darkModeClassName)) {
+            localStorage.setItem('darkMode', 'enabled');
             toggleDarkModeButton.textContent = '切換一般模式';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            toggleDarkModeButton.textContent = '切換護眼模式';
         }
-    </script>
+    });
+
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        pageBody.classList.add(darkModeClassName);
+        toggleDarkModeButton.textContent = '切換一般模式';
+    }
+</script>
 </body>
 </html>
